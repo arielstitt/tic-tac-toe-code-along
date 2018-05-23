@@ -38,7 +38,7 @@ function startGame() {
         cells[i].addEventListener('click', turnClick, false)
     }
 }
-
+//=========== TURN CLICK ======== //
 function turnClick(square) {
     if (typeof origBoard[square.target.id] == 'number') {
         turn(square.target.id, huPlayer)
@@ -48,6 +48,7 @@ function turnClick(square) {
 
 }
 
+//===========  TURN  =============//
 function turn(squareId, player) {
     origBoard[squareId] = player;
     document.getElementById(squareId).innerText = player;
@@ -55,6 +56,7 @@ function turn(squareId, player) {
     if (gameWon) gameOver(gameWon)
 }
 
+// =========== CHECKWIN =========//
 function checkWin(board, player) {
     let plays = board.reduce((a, e, i) =>
         (e === player) ? a.concat(i) : a, [])
@@ -76,12 +78,17 @@ function gameOver(gameWon) {
     for (var i = 0; i < cells.length; i++) {
         cells[i].removeEventListener('click', turnClick, false)
     }
+    declareWinner(gameWon.player == huPlayer ? "you win" : "you loose")
 }
 
+// ====== DECLARE WINNER ======== //
+
 function declareWinner(who) {
-    document.querySelector('..endgame').style.display = 'block'
+    document.querySelector('.endgame').style.display = 'block'
     document.querySelector('.endgame .text').innerText = who
 }
+
+// ======= EMPTY SQUARES =========//
 
 function emptySquares(){
     return origBoard.filter(s => typeof s == 'number')
@@ -89,9 +96,12 @@ function emptySquares(){
 
 //=======BEST SPOT============//
 //this is how we're going to find the spot the ai player is going to play
+
 function bestSpot() {
     return emptySquares()[0]
 }
+
+// ===========  CHECK TIE ========//
 
 function checkTie(){
     if (emptySquares().length == 0) {
