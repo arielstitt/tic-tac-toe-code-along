@@ -25,6 +25,7 @@ const cells = document.querySelectorAll('.cell')
 //create a function that starts the game
 startGame();
 
+//=============START GAME===========//
 
 function startGame() {
     document.querySelector('.endgame').style.display = 'none'
@@ -46,7 +47,7 @@ function turn(squareId, player) {
     origBoard[squareId] = player;
     document.getElementById(squareId).innerText = player;
     let gameWon = checkWin(origBoard, player)
-    if (gameWon) SVGPathSegMovetoRel(gameWon)
+    if (gameWon) gameOver(gameWon)
 }
 
 function checkWin(board, player) {
