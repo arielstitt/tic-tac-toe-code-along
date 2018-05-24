@@ -19,6 +19,7 @@ const winCombos = [
     [0, 4, 8],
     [6, 4, 2]
 ]
+
 //selects each element that has the class of cell 
 const cells = document.querySelectorAll('.cell')
 
@@ -51,11 +52,22 @@ function startGame() {
 // =========== TURN CLICK ======== //
 
 function turnClick(square) {
-    console.log(square)
+    //the board is the array of numbers set above
+    console.log('this is the board', 'which is a(n)', typeof origBoard)
+    //square.target.id targets the number assigned to each square in the array board
+    console.log('this is the square.target.id', 'which is a(n)', typeof [square.target.id])
+    //in order to grab the number assigned to the squares in the array of numbers
+    //use [bracket notation] to get the number out of the array of arrays (called origBoard)
+    console.log('this is both put together', 'which is a(n)', typeof origBoard[square.target.id])
+    //if the type original board's target.id is equal == to number
     if (typeof origBoard[square.target.id] == 'number') {
+        //run the turn() function and pass in the number of the square and human player 'O' as arguments
         turn(square.target.id, huPlayer)
+        //AND if the check tie function is false
         if (!checkTie())
+        //run the turn() function WITH bestSpot() function and AI player as an argument
             turn(bestSpot(), aiPlayer)
+            console.log(bestSpot())
     }
 
 }
