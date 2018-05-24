@@ -4,7 +4,7 @@
 
 //initialize the gameboard
 let origBoard;
-
+//set the values of human player to O and aiplayer to X
 const huPlayer = 'O'
 const aiPlayer = 'X'
 
@@ -28,18 +28,30 @@ startGame();
 //=============START GAME===========//
 
 function startGame() {
+    //Grabs the element with the class of endgame and sets the style to display none
+    //When the game is started the board will clear out
     document.querySelector('.endgame').style.display = 'none'
-    //make the array from every number from 0 to 9
+    //Set the value of original board equal to an array with 9 keys in each index in the array [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    //The array is 9 because of the 9 spots in the table
     origBoard = Array.from(Array(9).keys())
     //remove the Xs and Os from the board
+    //Loop through the cells
     for (var i = 0; i < cells.length; i++) {
+        //grab each cell and set the text to an empty string
         cells[i].innerText = ''
+        //grab each cell and remove the background color
         cells[i].style.removeProperty('background-color')
+        //grab each cell and add the event listener 'click'
+        //inside the event listener add the turn click function and set it to false.
+        // turn click
+        //false prevents the player from being able to continuously click the board after a winner is declared
         cells[i].addEventListener('click', turnClick, false)
     }
 }
-//=========== TURN CLICK ======== //
+// =========== TURN CLICK ======== //
+
 function turnClick(square) {
+    console.log(square)
     if (typeof origBoard[square.target.id] == 'number') {
         turn(square.target.id, huPlayer)
         if (!checkTie())
