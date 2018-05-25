@@ -32,8 +32,10 @@ function startGame() {
     //Grabs the element with the class of endgame and sets the style to display none
     //When the game is started the board will clear out
     document.querySelector('.endgame').style.display = 'none'
-    //Set the value of original board equal to an array with 9 keys in each index in the array [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    //The array is 9 because of the 9 spots in the table
+    //Set the value of original board equal to an array with 9 keys in each index in the array 
+    //[0, 1, 2, 3, 4, 5, 6, 7, 8]
+    //The array.length is 9 because of the 9 spots in the table
+    //each index represents the possible combinations of wins in the winCombos nested array
     origBoard = Array.from(Array(9).keys())
     //remove the Xs and Os from the board
     //Loop through the cells
@@ -77,21 +79,34 @@ function turnClick(square) {
 
 //===========  TURN  =============//
 
-//
+//This turn function has squareId and player passed as arguments
+//squareId has the value of origBoard[square.target.id]
+//player has the value of both the human player and the AI player
 function turn(squareId, player) {
-    console.log("player", player)
-    console.log("squareId", squareId)
-    console.log("origBoard[squareId]", origBoard[squareId])   
+    //origBoard[squareId] is an index number. The index number is the position of the cell in the array
+    //In this line, we are setting that index number equal to the player (X or O)
     origBoard[squareId] = player;
+    //then get the element by squareId (which is also a number) 
+    //grab the inner text of that id and set it to the player as well (X or O)
     document.getElementById(squareId).innerText = player;
+    //this line is assigning gameWon variable to the checkWin function with 2 arguments
+    //the original and the player
+    // the original board is the array that was set up earlier
+    //and player now has the value of the index # and the id# assigned to X or O
     let gameWon = checkWin(origBoard, player)
-    if (gameWon) gameOver(gameWon)
+    //if the game is won
+    if (gameWon) 
+    //run the game over function
+    gameOver(gameWon)
 }
 
 // =========== CHECKWIN =========//
+
 function checkWin(board, player) {
-    let plays = board.reduce((a, e, i) =>
-        (e === player) ? a.concat(i) : a, [])
+    //store the variable 
+    let plays = board.reduce((accum, currentVal, index) =>
+    (currentVal === player) ? accum.concat(index) : accum, [])
+    //store variable
     let gameWon = null
     for (let [index, win] of winCombos.entries()) {
         if (win.every(elem => plays.indexOf(elem) > -1)) {
