@@ -53,27 +53,35 @@ function startGame() {
 
 function turnClick(square) {
     //the board is the array of numbers set above
-    console.log('this is the board', 'which is a(n)', typeof origBoard)
+    // console.log('this is the board', 'which is a(n)', typeof origBoard)
     //square.target.id targets the number assigned to each square in the array board
-    console.log('this is the square.target.id', 'which is a(n)', typeof [square.target.id])
+    // console.log('this is the square.target.id', 'which is a(n)', typeof [square.target.id])
     //in order to grab the number assigned to the squares in the array of numbers
     //use [bracket notation] to get the number out of the array of arrays (called origBoard)
-    console.log('this is both put together', 'which is a(n)', typeof origBoard[square.target.id])
+    // console.log('this is both put together', 'which is a(n)', typeof origBoard[square.target.id])
     //if the type original board's target.id is equal == to number
     if (typeof origBoard[square.target.id] == 'number') {
         //run the turn() function and pass in the number of the square and human player 'O' as arguments
+        //we want the human player to make a move, then the AI will make the next move
         turn(square.target.id, huPlayer)
         //AND if the check tie function is false
+        //if the Tie function is false then the AI will makes it's move
         if (!checkTie())
         //run the turn() function WITH bestSpot() function and AI player as an argument
+        //After the human player makes it's move , and there isn't a tie, then the AI can turn
             turn(bestSpot(), aiPlayer)
-            console.log(bestSpot())
+            // console.log(bestSpot())
     }
 
 }
 
 //===========  TURN  =============//
+
+//
 function turn(squareId, player) {
+    console.log("player", player)
+    console.log("squareId", squareId)
+    console.log("origBoard[squareId]", origBoard[squareId])   
     origBoard[squareId] = player;
     document.getElementById(squareId).innerText = player;
     let gameWon = checkWin(origBoard, player)
@@ -139,14 +147,3 @@ function checkTie(){
     return false
 }
 
-//determine a winner
-//set up logic to determine the winner
-
-
-//Basic AI and winner notification
-//notify who the winner is
-
-
-
-//minimax algorithm
-//create an unbeatable ai
